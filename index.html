@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  
+  <link href="styles/style.css" rel="stylesheet" type="text/css">
+
+
+  <title>PI5</title>
+</head>
+
+<body>
+  <!-- Alerts -->
+  
+  <!-- Componet -->
+  <div class="card">
+    <div alerts style="min-height: 66px;"> </div>
+    <div class="card-body">
+      <h5 class="card-title">Modelagem Compartimental</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Computação Científica</h6>
+      <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+        <div class="carousel-inner">
+          <!-- Step 1 -->
+          <div class="carousel-item active">
+            <form id="formStep1" onsubmit="return false;">
+              <div class="input-group row">
+                <label for="inputQtdCompartimentos" class="col-sm-3 col-form-label"> Compartimentos</label>
+                <div class="input-group-prepend">
+                  <div class="input-group-text"> # </div>
+                </div>
+                <input type="number" class="form-control" id="inputQtdCompartimentos" placeholder="Quantidade" value="2">
+              </div>
+
+              <div class="d-flex flex-row-reverse">
+                <button type="button" class="btn btn-primary mb-2" onclick="return setQuantidadeCompartimentos()">Continuar</button>
+              </div>
+            </form>
+          </div>
+          <!-- Step 2 -->
+          <div class="carousel-item">
+            <form onsubmit="return false;">
+              <div class="input-group row">
+                <label for="comboCompartimentoSelecionado" class="col-sm-3 col-form-label"> Configurar Comp. </label>
+                <div class="input-group-prepend">
+                  <div class="input-group-text"> # </div>
+                </div>
+                <select class="form-control" id="comboCompartimentoSelecionado" onchange="changeCompartimento()"></select>
+              </div>
+
+              <div id="configuracoes" style="display: none">
+                <div class="input-group row">
+                  <label for="qtdInicial" class="col-sm-3 col-form-label"> Quantidade Inicial </label>
+                  <div class="input-group-prepend">
+                    <div class="input-group-text"> # </div>
+                  </div>
+                  <input type="number" class="form-control" id="qtdInicial" placeholder="Quantidade">
+                </div>
+  
+                <div config-compartimento ></div>
+              </div>
+
+              <div style="float: right;">
+                <button type="button" class="btn btn-primary" href="#myCarousel" data-slide="prev">Voltar</button>
+                <button type="button" class="btn btn-success" id="btnSalvar" onclick="saveConfigs()" disabled>Salvar Configurações</button>
+                <button type="button" class="btn btn-primary" id="btnSimular" onclick="continuarSimulacao()" disabled>Continuar</button>
+              </div>
+            </form>
+          </div>
+          <!-- Step 3 - Simulação -->
+          <div class="carousel-item carousel-compartimentos">
+            <div class="input-group row">
+              <label for="inputTempo" class="col-sm-3 col-form-label"> Tempo </label>
+              <div class="input-group-prepend">
+                <div class="input-group-text"> ' </div>
+              </div>
+              <input type="number" class="form-control" id="inputTempo" value="0" placeholder="Tempo">
+            </div>
+            <div style="padding-bottom: 20px; display: flex;" >
+              <button style="flex: auto" type="button" class="btn btn-dark" onclick="simularTransferencias()">Simular</button>
+            </div>
+            <div compartimentos style="height: 100px;"></div>
+          </div>
+        </div>
+       </div>
+    </div>
+
+    <!-- Script Principal -->
+    <script src="main.js"></script>
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <!-- Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>
+
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script> -->

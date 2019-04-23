@@ -1,0 +1,34 @@
+* {
+  outline: none;
+}
+
+.card {
+  /* max-width: 800px; */
+}
+
+.carousel-inner {
+  margin-top: 100px;
+}
+
+.input-group-text {
+  border-radius: 4px 0 0 4px !important
+}
+
+.input-group {
+  margin: 15px 0;
+}
+
+.compartimento {
+  height: 0px;
+  width: 150px;
+  background-color: red;
+  transition: height 2s ease-out;
+  display: inline-flex;
+  margin-right: 20px;
+  position: absolute;
+  bottom: 0;
+}
+
+.carousel-compartimentos {
+  /* height: 200px; */
+}
