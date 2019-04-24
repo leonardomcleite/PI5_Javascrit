@@ -21,74 +21,79 @@
   
   <!-- Componet -->
   <div class="card">
-    <div alerts style="min-height: 66px;"> </div>
+    <div alerts> </div>
     <div class="card-body">
-      <h5 class="card-title">Modelagem Compartimental</h5>
-      <h6 class="card-subtitle mb-2 text-muted">Computação Científica</h6>
-      <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
-        <div class="carousel-inner">
-          <!-- Step 1 -->
-          <div class="carousel-item active">
-            <form id="formStep1" onsubmit="return false;">
-              <div class="input-group row">
-                <label for="inputQtdCompartimentos" class="col-sm-3 col-form-label"> Compartimentos</label>
-                <div class="input-group-prepend">
-                  <div class="input-group-text"> # </div>
-                </div>
-                <input type="number" class="form-control" id="inputQtdCompartimentos" placeholder="Quantidade" value="2">
-              </div>
-
-              <div class="d-flex flex-row-reverse">
-                <button type="button" class="btn btn-primary mb-2" onclick="return setQuantidadeCompartimentos()">Continuar</button>
-              </div>
-            </form>
-          </div>
-          <!-- Step 2 -->
-          <div class="carousel-item">
-            <form onsubmit="return false;">
-              <div class="input-group row">
-                <label for="comboCompartimentoSelecionado" class="col-sm-3 col-form-label"> Configurar Comp. </label>
-                <div class="input-group-prepend">
-                  <div class="input-group-text"> # </div>
-                </div>
-                <select class="form-control" id="comboCompartimentoSelecionado" onchange="changeCompartimento()"></select>
-              </div>
-
-              <div id="configuracoes" style="display: none">
+      <div class="card-header">
+        <h4 class="card-title">Modelagem Compartimental</h4>
+        <h6 class="card-subtitle mb-2 text-muted">Computação Científica</h6>
+      </div>
+      <div class="form">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+          <div class="carousel-inner">
+            <!-- Step 1 -->
+            <div class="carousel-item active">
+              <form id="formStep1" onsubmit="return false;">
                 <div class="input-group row">
-                  <label for="qtdInicial" class="col-sm-3 col-form-label"> Quantidade Inicial </label>
+                  <label for="inputQtdCompartimentos" class="col-sm-3 col-form-label"> Compartimentos</label>
                   <div class="input-group-prepend">
                     <div class="input-group-text"> # </div>
                   </div>
-                  <input type="number" class="form-control" id="qtdInicial" placeholder="Quantidade">
+                  <input type="number" class="form-control" id="inputQtdCompartimentos" placeholder="Quantidade" value="1">
                 </div>
   
-                <div config-compartimento ></div>
-              </div>
-
-              <div style="float: right;">
-                <button type="button" class="btn btn-primary" href="#myCarousel" data-slide="prev">Voltar</button>
-                <button type="button" class="btn btn-success" id="btnSalvar" onclick="saveConfigs()" disabled>Salvar Configurações</button>
-                <button type="button" class="btn btn-primary" id="btnSimular" onclick="continuarSimulacao()" disabled>Continuar</button>
-              </div>
-            </form>
-          </div>
-          <!-- Step 3 - Simulação -->
-          <div class="carousel-item carousel-compartimentos">
-            <div class="input-group row">
-              <label for="inputTempo" class="col-sm-3 col-form-label"> Tempo </label>
-              <div class="input-group-prepend">
-                <div class="input-group-text"> ' </div>
-              </div>
-              <input type="number" class="form-control" id="inputTempo" value="0" placeholder="Tempo">
+                <div class="d-flex flex-row-reverse">
+                  <button type="button" class="btn btn-primary mb-2" onclick="return setQuantidadeCompartimentos()">Continuar</button>
+                </div>
+              </form>
             </div>
-            <div style="padding-bottom: 20px; display: flex;" >
-              <button style="flex: auto" type="button" class="btn btn-dark" onclick="simularTransferencias()">Simular</button>
+            <!-- Step 2 -->
+            <div class="carousel-item">
+              <form onsubmit="return false;">
+                <div class="input-group row">
+                  <label for="comboCompartimentoSelecionado" class="col-sm-3 col-form-label"> Configurar Comp. </label>
+                  <div class="input-group-prepend">
+                    <div class="input-group-text"> # </div>
+                  </div>
+                  <select class="custom-select" id="comboCompartimentoSelecionado" onchange="changeCompartimento()"></select>
+                </div>
+  
+                <div id="configuracoes" style="display: none">
+                  <div class="input-group row">
+                    <label for="inputQtdInicial" class="col-sm-3 col-form-label"> Quantidade Inicial </label>
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"> # </div>
+                    </div>
+                    <input type="number" class="form-control" id="inputQtdInicial" placeholder="Quantidade">
+                  </div>
+    
+                  <div config-compartimento ></div>
+                </div>
+  
+                <div style="float: right;">
+                  <button type="button" class="btn btn-primary" href="#myCarousel" data-slide="prev">Voltar</button>
+                  <button type="button" class="btn btn-success" id="btnSalvar" onclick="saveConfigs()" disabled>Salvar Configurações</button>
+                  <button type="button" class="btn btn-primary" id="btnSimular" onclick="continuarSimulacao()" disabled>Continuar</button>
+                </div>
+              </form>
             </div>
-            <div compartimentos style="height: 100px;"></div>
+            <!-- Step 3 - Simulação -->
+            <div class="carousel-item carousel-compartimentos">
+              <div class="input-group row">
+                <label for="inputTempo" class="col-sm-3 col-form-label"> Tempo </label>
+                <div class="input-group-prepend">
+                  <div class="input-group-text"> ' </div>
+                </div>
+                <input type="number" class="form-control" id="inputTempo" value="0" placeholder="Tempo">
+              </div>
+              <div style="padding-bottom: 20px; display: flex;" >
+                <button style="flex: auto"  type="button" class="btn btn-primary" href="#myCarousel" data-slide="prev">Voltar</button>
+                <button style="flex: auto; margin-right: 10px;" type="button" class="btn btn-dark" onclick="simularTransferencias()">Simular</button>
+              </div>
+              <div compartimentos style="height: 226px;"></div>
+            </div>
           </div>
-        </div>
-       </div>
+         </div>
+      </div>
     </div>
 
     <!-- Script Principal -->

@@ -1,9 +1,10 @@
 * {
-  outline: none;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .card {
-  /* max-width: 800px; */
+  height: 100vh;
 }
 
 .carousel-inner {
@@ -21,14 +22,42 @@
 .compartimento {
   height: 0px;
   width: 150px;
-  background-color: red;
+  background-color: #3f51b5;
   transition: height 2s ease-out;
   display: inline-flex;
   margin-right: 20px;
   position: absolute;
-  bottom: 0;
+  bottom: 25px;
+  border-radius: 6px;
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12) !important;
 }
 
-.carousel-compartimentos {
-  /* height: 200px; */
+.compartimento-background {
+  height: 200px;
+  background-color: #f0eeee;
+  transition: none !important;
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12) !important;
+}
+
+.card-body {
+  padding: 0px !important;
+}
+
+.carousel {
+  width: 80%;
+  margin: 60px auto 0 auto;
+  border: 1px solid #ccc;
+  padding: 40px;
+}
+
+.carousel-inner {
+  margin-top: 0px !important;
+}
+
+.title-comp {
+  position: absolute;
+  bottom: 0px;
+  width: 150px;
+  text-align: center;
+  font-weight: bold;
 }
