@@ -4,11 +4,8 @@
 }
 
 .card {
-  height: 100vh;
-}
-
-.carousel-inner {
-  margin-top: 100px;
+  height: 100%;
+  min-height: 100vh;
 }
 
 .input-group-text {
@@ -34,7 +31,7 @@
 
 .compartimento-background {
   height: 200px;
-  background-color: #f0eeee;
+  background-color: #f8f7f7;
   transition: none !important;
   box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12) !important;
 }
@@ -45,13 +42,9 @@
 
 .carousel {
   width: 80%;
-  margin: 60px auto 0 auto;
+  margin: 60px auto;
   border: 1px solid #ccc;
   padding: 40px;
-}
-
-.carousel-inner {
-  margin-top: 0px !important;
 }
 
 .title-comp {
@@ -59,5 +52,9 @@
   bottom: 0px;
   width: 150px;
   text-align: center;
+  font-weight: bold;
+}
+
+.col-form-label {
   font-weight: bold;
 }
