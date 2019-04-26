@@ -215,10 +215,12 @@ function continuarSimulacao() {
     for (let i = 1; i <= qtdCompartimentos; i++) {
         let atual = storage[i];
         if (atual) {
-            let left = `left: ${(atual.compartimento - 1)*170}px`;
+            let left = `left: ${(atual.compartimento - 1)*250}px`;
+            let leftArrow = `left: ${((atual.compartimento - 1)*250)+165}px`;
             drawAll += `
             <div style="${left}" id="back-compart${atual.compartimento}" class="compartimento compartimento-background" data-toggle="tooltip" data-placement="top" title="100.00%" delay="0"></div>
             <div style="${left}; background-color: ${colors[(i-1) % colors.length]}" id="compart${atual.compartimento}" class="compartimento" data-toggle="tooltip" data-placement="top" title="100.00%" delay="0"></div>
+            <div class="seta" style="${leftArrow}"><span></span></div>
             <span class="title-comp" style="${left}">Compartimento ${atual.compartimento}</span>`
         }
     }

@@ -1,0 +1,45 @@
+.seta {
+    display: flex;
+    margin-top: 100px;
+    left: 165px;
+    position: absolute;
+}
+
+.down {
+    transform: rotate(90deg);
+}
+
+.up {
+    transform: rotate(-90deg);
+}
+
+.left {
+    transform: rotate(180deg);
+}
+
+.seta span {
+    width: 65px;
+    height: 3px;
+    background-color: #000000;
+}
+
+.seta span:before,
+.seta span:after {
+    margin-left: 54px;
+    content: "";
+    width: 11px;
+    height: 100%;
+    background-color: #000000;
+    position: relative;
+    display: flex;
+}
+
+.seta span:before {
+    transform: rotate(45deg);
+    bottom: 5px;
+}
+
+.seta span:after {
+    transform: rotate(-45deg);
+    bottom: -2px;
+}
