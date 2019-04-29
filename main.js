@@ -1,11 +1,9 @@
-// import  $ from 'jquery';'    
-
-
 // Forms
 let formStep1 = document.querySelector('#formStep1');
 // Inputs
 let inputQtdCompartimentos = document.querySelector('#inputQtdCompartimentos');
 let inputTempo = document.querySelector('#inputTempo');
+let inputQtdInicial = document.querySelector('#inputQtdInicial');
 // Selects
 let comboCompartimentoSelecionado = document.querySelector('#comboCompartimentoSelecionado');
 // Buttons
@@ -13,25 +11,14 @@ let btnSalvar = document.querySelector('#btnSalvar');
 let btnSimular = document.querySelector('#btnSimular');
 // Utils
 let configuracoes = document.querySelector('#configuracoes');
-let inputQtdInicial = document.querySelector('#inputQtdInicial');
 let componentConfigCompartimento = document.querySelector('[config-compartimento]');
 let alerts = document.querySelector('[alerts]');
 let listAlerts = [];
 let timeouts = [];
 let qtdCompartimentos;
 let storage = [];
-let colors = [
-    '#ffb74d',
-    '#ff9800',
-    '#f57c00',
-    '#e65100',
-    '#bf360c',
-    '#ff7043',
-    '#ffab91',
-    '#fbe9e7'
-]
+let colors = ['#ffb74d','#ff9800','#f57c00','#e65100','#bf360c','#ff7043','#ffab91','#fbe9e7']
 
-// ################################ Main Component ################################
 
 /**
  * Verifica se a quantidade de compartimentos é igual ou superior à 1
@@ -40,7 +27,8 @@ function setQuantidadeCompartimentos() {
     // Valida a qtd
     if (Number(inputQtdCompartimentos.value) < 1) {
         showAlert("O mínimo de compartimentos é 1.");
-    } else { // Reseta o storage de compartimentos
+    } else { 
+        // Reseta o storage de compartimentos
         storage = [];
         storage.push({
             compartimento: 0,
@@ -53,6 +41,8 @@ function setQuantidadeCompartimentos() {
             $('.carousel').carousel('next');
             qtdCompartimentos = Number(inputQtdCompartimentos.value);
             comboCompartimentoSelecionado.innerHTML = createListOptions();
+        } else {
+            showAlert("Campo Quantidade Inválido");
         }
     }
 }
@@ -81,21 +71,26 @@ function changeCompartimento() {
         configuracoes.style.display = "block";
         let atual = storage[comboCompartimentoSelecionado.value];
         if (atual) {
-            inputQtdInicial.value = atual.qtdInicial;
+            inputQtdInicial.value = atual.qtdInicial < 0 ? (atual.qtdInicial * -1) : atual.qtdInicial;
             for (let i = 0; i <= qtdCompartimentos; i++) {
                 if (i !== Number(comboCompartimentoSelecionado.value)) {
                     let check = document.querySelector(`#check${i}`);
                     let taxa = document.querySelector(`#taxa${i}`);
-                    let item = document.querySelector(`#form${i}`);
+                    // let item = document.querySelector(`#form${i}`);
                     for (let j = 0; j < atual.saidas.length; j++) {
                         if (atual.saidas[j].compartimento === i && check && taxa) {
                             check.checked = true;
                             taxa.value = atual.saidas[j].taxa;
-                            item.style.display = "flex";
+                            // item.style.display = "flex";
                         }
                     }
                 }
             }
+        }
+        if (Number(comboCompartimentoSelecionado.value) === 0) {
+            formQtdInicial.style.display = "none";
+        } else {
+            formQtdInicial.style.display = "flex";
         }
     } else {
         btnSalvar.disabled = true;
@@ -111,27 +106,39 @@ function configSelect(atual) {
     let result = ``;
     for (let i = 0; i <= qtdCompartimentos; i++) {
         if (i !== atual) {
-            result += `
-            <form>
+            qtdIndividual = ``;
+            if (atual === 0) {
+                qtdIndividual += `
                 <div class="input-group row">
-                    <div class="col-sm-3"></div>
-                    <div class="col-sm-10">
-                        <div class="custom-control custom-checkbox mr-sm-2" for="check${i}">
-                            <input class="custom-control-input" type="checkbox" id="check${i}" style="cursor: pointer" onchange="return showElement(form${i})">
-                            <label class="custom-control-label" style="cursor: pointer" for="check${i}">
-                                ${i !== 0 ? `Transf. Compartimento ${i}` : `Transf. Meio Externo`}
-                            </label>
-                        </div>
+                    <label for="inputQtdInicial${i}" class="col-sm-3 col-form-label"> Quantidade Inicial </label>
+                    <div class="input-group-prepend">
+                        <div class="input-group-text"> # </div>
+                    </div>
+                    <input type="number" class="form-control" id="inputQtdInicial${i}" placeholder="Quantidade">
+                </div>`
+            }
+            result += `
+            <div class="input-group row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-10">
+                    <div class="custom-control custom-checkbox mr-sm-2" for="check${i}">
+                        <input class="custom-control-input" type="checkbox" id="check${i}" style="cursor: pointer" onchange="return showElement(form${i})">
+                        <label class="custom-control-label" style="cursor: pointer" for="check${i}">
+                            ${i !== 0 ? `Transf. Compartimento ${i}` : `Transf. Meio Externo`}
+                        </label>
                     </div>
                 </div>
-                <div class="input-group row" id="form${i}" style="display: none">
-                    <label for="form${i}" class="col-sm-3 col-form-label"> Taxa Transferência</label>
+            </div>
+            <div id="form${i}" style="display: none">
+                ${qtdIndividual}
+                <div class="input-group row">
+                    <label class="col-sm-3 col-form-label"> Taxa Transferência</label>
                     <div class="input-group-prepend">
                         <div class="input-group-text"> % </div>
                     </div>
                     <input type="number" class="form-control" id="taxa${i}" placeholder="Taxa">
                 </div>
-            </form>`;
+            </div>`;
         }
     }
     return result;
@@ -143,7 +150,7 @@ function configSelect(atual) {
  */
 function showElement(el) {
     if (el.style.display === "none") {
-        el.style.display = "flex";
+        el.style.display = "block";
     } else {
         el.style.display = "none";
     }
@@ -154,15 +161,17 @@ function showElement(el) {
  */
 function saveConfigs() {
     let indexAtual = Number(comboCompartimentoSelecionado.value);
+    let qtd = 0;
     let saidas = [];
     for (let i = 0; i <= qtdCompartimentos; i++) {
+        qtd = indexAtual === 0 && i > 0 ? Number(document.querySelector(`#inputQtdInicial${i}`).value) : Number(inputQtdInicial.value);
         let check = document.querySelector(`#check${i}`);
         let item = document.querySelector(`#taxa${i}`);
         if (i !== indexAtual && check && check.checked && Number(item.value)) {
             saidas.push({
                 compartimento: i,
                 taxa: -Number(item.value),
-                qtdInicial: Number(inputQtdInicial.value)
+                qtdInicial: qtd
             });
             if (!storage[i]) {
                 storage[i] = {
@@ -172,14 +181,14 @@ function saveConfigs() {
                     entradas: [{
                         compartimento: indexAtual,
                         taxa: Number(item.value),
-                        qtdInicial: Number(inputQtdInicial.value)
+                        qtdInicial: qtd
                     }]
                 };
             } else {
                 storage[i].entradas.push({
                     compartimento: indexAtual,
                     taxa: Number(item.value),
-                    qtdInicial: Number(inputQtdInicial.value)
+                    qtdInicial: qtd
                 });
             }
         }
@@ -189,12 +198,13 @@ function saveConfigs() {
         if (!storage[indexAtual]) {
             storage[indexAtual] = {
                 compartimento: indexAtual,
-                qtdInicial: Number(inputQtdInicial.value),
+                qtdInicial: qtd,
                 saidas: saidas,
                 entradas: []
             }
         } else {
             storage[indexAtual].saidas = [...storage[indexAtual].saidas, ...saidas];
+            qtd > storage[indexAtual].qtdInicial ? storage[indexAtual].qtdInicial = qtd : storage[indexAtual].qtdInicial = storage[indexAtual].qtdInicial;
         }
         btnSimular.disabled = false;
         showAlert("Dados salvos com sucesso!", 'success');
@@ -217,11 +227,13 @@ function continuarSimulacao() {
         if (atual) {
             let left = `left: ${(atual.compartimento - 1)*250}px`;
             let leftArrow = `left: ${((atual.compartimento - 1)*250)+165}px`;
+            const arrow = atual.compartimento < (storage.length - 1) ? `<div class="seta" style="${leftArrow}"><span></span></div>` : ``;
             drawAll += `
             <div style="${left}" id="back-compart${atual.compartimento}" class="compartimento compartimento-background" data-toggle="tooltip" data-placement="top" title="100.00%" delay="0"></div>
             <div style="${left}; background-color: ${colors[(i-1) % colors.length]}" id="compart${atual.compartimento}" class="compartimento" data-toggle="tooltip" data-placement="top" title="100.00%" delay="0"></div>
-            <div class="seta" style="${leftArrow}"><span></span></div>
-            <span class="title-comp" style="${left}">Compartimento ${atual.compartimento}</span>`
+            ${arrow}
+            <span class="title-comp" style="${left}">Compartimento ${atual.compartimento}</span>
+            <span id="compValue${i}" class="title-comp" style="${left}; bottom: 0px;">[${atual.qtdInicial}]</span>`
         }
     }
     comp.innerHTML = drawAll;
@@ -239,9 +251,11 @@ function simularTransferencias() {
     maiorQtd = storage.map(el => el.qtdInicial).reduce(maxCallback2, -Infinity);
 
     for (let i = 1; i <= qtdCompartimentos; i++) {
+        let label = document.querySelector(`#compValue${i}`);
         let compart = document.querySelector(`#compart${i}`);
         compart.style.height = `${(calculo[i]/maiorQtd)*200}px`;
         compart.title = `${calculo[i].toFixed(2)} - (${((calculo[i]/maiorQtd)*100).toFixed(2)}%)`;
+        label.innerHTML = `[${calculo[i].toFixed(2)}]`;
     }
 }
 
@@ -337,114 +351,4 @@ function funcaoGeneralizada(compartimento, c) {
         calc += saida.taxa * c[compartimento.compartimento];
     });
     return calc;
-}
-
-// ######################## Calculo balistico #############################
-function RK4(x0, v0, tFinal) {
-    let h = 0.01;
-    let tn = 0;
-    let xn = x0;
-    let vn = v0;
-    let k1, k2, k3, k4, l1, l2, l3, l4;
-    for (let i = 0; xn >= 0.0; i++) {
-        k1 = fx(tn, xn, vn);
-        l1 = gx(tn, xn, vn);
-        k2 = fx(tn + (h / 2), xn + (h / 2 * k1), vn + (h / 2 * k1));
-        l2 = gx(tn + (h / 2), xn + (h / 2 * l1), vn + (h / 2 * l1));
-        k3 = fx(tn + (h / 2), xn + (h / 2 * k2), vn + (h / 2 * k2));
-        l3 = gx(tn + (h / 2), xn + (h / 2 * l2), vn + (h / 2 * l2));
-        k4 = fx(tn + h, xn + (h * k3), vn + (h * k3));
-        l4 = gx(tn + h, xn + (h * l3), vn + (h * l3));
-        xn = xn + (h / 6 * (k1 + 2 * (k2 + k3) + k4));
-        vn = vn + (h / 6 * (l1 + 2 * (l2 + l3) + l4));
-        tn += h;
-        console.log(`[${tn}, ${xn}, ${vn}]`);
-    }
-}
-
-function fx(t, x, v) {
-    return v;
-}
-
-function gx(t, x, v) {
-    //AK-47
-    let m = 7.9 / 1000;
-    let coeficiente = 0.5;
-    let densidade = 1.2927;
-    let gravidade = 9.8;
-    let calibre = 7.62;
-    let area = Math.PI * Math.pow(calibre / 2, 2) * 0.000001;
-    return (
-        -1 / (2 * m) *
-        coeficiente *
-        densidade *
-        area *
-        Math.pow(v, 2) -
-        gravidade
-    );
-}
-
-// ################################## Teste #######################################
-function RGK4(k12, k23, k31, c1, c2, c3, tFinal) {
-    let h = 0.01;
-    let tn = 0;
-    let n = (tFinal / h);
-    let k1, k2, k3, k4, l1, l2, l3, l4, m1, m2, m3, m4;
-    for (tn = 0; tn < n; tn = tn + h) {
-        k1 = fc1(k12, k23, k31, c1, c2, c3);
-        l1 = fc2(k12, k23, k31, c1, c2, c3);
-        m1 = fc3(k12, k23, k31, c1, c2, c3);
-
-        k2 = fc1(k12, k23, k31, c1 + (h / 2 * k1), c2 + (h / 2 * k1), c3 + (h / 2 * k1));
-        l2 = fc2(k12, k23, k31, c1 + (h / 2 * l1), c2 + (h / 2 * l1), c3 + (h / 2 * l1));
-        m2 = fc3(k12, k23, k31, c1 + (h / 2 * m1), c2 + (h / 2 * m1), c3 + (h / 2 * m1));
-
-        k3 = fc1(k12, k23, k31, c1 + (h / 2 * k2), c2 + (h / 2 * k2), c3 + (h / 2 * k2));
-        l3 = fc2(k12, k23, k31, c1 + (h / 2 * l2), c2 + (h / 2 * l2), c3 + (h / 2 * l2));
-        m3 = fc3(k12, k23, k31, c1 + (h / 2 * m2), c2 + (h / 2 * m2), c3 + (h / 2 * m2));
-
-        k4 = fc1(k12, k23, k31, c1 + (h * k3), c2 + (h * k3), c3 + (h * k3));
-        l4 = fc2(k12, k23, k31, c1 + (h * l3), c2 + (h * l3), c3 + (h * l3));
-        m4 = fc3(k12, k23, k31, c1 + (h * m3), c2 + (h * m3), c3 + (h * m3));
-
-        c1 = c1 + (h / 6 * (k1 + 2 * (k2 + k3) + k4));
-        c2 = c2 + (h / 6 * (l1 + 2 * (l2 + l3) + l4));
-        c3 = c3 + (h / 6 * (m1 + 2 * (m2 + m3) + m4));
-        tn += h;
-    }
-    console.log(`[${c1}, ${c2}, ${c3}]`);
-}
-
-function fc1(k12, k23, k31, c1, c2, c3) {
-    return -k12 * c1 + k31 * c3;
-}
-
-function fc2(k12, k23, k31, c1, c2, c3) {
-    return -k23 * c2 + k12 * c1;
-}
-
-function fc3(k12, k23, k31, c1, c2, c3) {
-    return -k31 * c3 + k23 * c2;
-}
-
-// ################################## Teste2 #######################################
-
-function RGK42(k12, c1, tFinal) {
-    let h = 0.01;
-    let tn = 0;
-    let n = (tFinal / h);
-    let k1, k2, k3, k4;
-    for (tn = 0; tn < n; tn = tn + h) {
-        k1 = fc12(k12, c1);
-        k2 = fc12(k12, c1 + (h / 2 * k1));
-        k3 = fc12(k12, c1 + (h / 2 * k2));
-        k4 = fc12(k12, c1 + (h * k3));
-        c1 = c1 + (h / 6 * (k1 + 2 * (k2 + k3) + k4));
-        tn += h;
-    }
-    console.log(`[${c1}]`);
-}
-
-function fc12(k12, c1) {
-    return -k12 * c1;
 }
