@@ -1,4 +1,4 @@
-// Forms
+/// Forms
 let formStep1 = document.querySelector('#formStep1');
 // Inputs
 let inputQtdCompartimentos = document.querySelector('#inputQtdCompartimentos');
@@ -17,8 +17,7 @@ let listAlerts = [];
 let timeouts = [];
 let qtdCompartimentos;
 let storage = [];
-let colors = ['#ffb74d','#ff9800','#f57c00','#e65100','#bf360c','#ff7043','#ffab91','#fbe9e7']
-
+let colors = ['#ffb74d','#ff9800','#f57c00','#e65100','#bf360c','#ff7043','#ffab91','#fbe9e7'];
 
 /**
  * Verifica se a quantidade de compartimentos é igual ou superior à 1
@@ -254,8 +253,8 @@ function simularTransferencias() {
         let label = document.querySelector(`#compValue${i}`);
         let compart = document.querySelector(`#compart${i}`);
         compart.style.height = `${(calculo[i]/maiorQtd)*200}px`;
-        compart.title = `${calculo[i].toFixed(2)} - (${((calculo[i]/maiorQtd)*100).toFixed(2)}%)`;
-        label.innerHTML = `[${calculo[i].toFixed(2)}]`;
+        compart.title = `${calculo[i].toFixed(4)} - (${((calculo[i]/maiorQtd)*100).toFixed(4)}%)`;
+        label.innerHTML = `[${calculo[i].toFixed(4)}]`;
     }
 }
 

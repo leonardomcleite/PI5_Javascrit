@@ -58,3 +58,12 @@
 .col-form-label {
   font-weight: bold;
 }
+
+#myChart{
+  background-color: #ffff;
+  border-radius: 6px;
+}
+
+.input-group-append, .input-group-prepend {
+  display: block !important;
+}

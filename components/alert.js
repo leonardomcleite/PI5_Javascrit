@@ -1,10 +1,10 @@
-export default class Alert {
+// export default class AlertComponent {
     /**
      * Alert
      * @param message 
      * @param type 
      */
-    showAlert(message, type = 'warning') {
+    export default  function showAlert(message, type = 'warning') {
         var alert = `
         <div class="alert alert-${type} alert-dismissible fade show" role="alert" id="alert${listAlerts.length + 1}">
             <strong>${message}</strong>
@@ -24,7 +24,7 @@ export default class Alert {
     /**
      * Desenha alerts da fila
      */
-    drawAlerts() {
+    export default  function drawAlerts() {
         var temp = ``;
         for (const item of listAlerts) {
             temp += item;
@@ -36,7 +36,7 @@ export default class Alert {
      * Remove alert
      * @param indexAlert 
      */
-    closeAlert(indexAlert) {
+    export default  function closeAlert(indexAlert) {
         for (let index = 0; index < listAlerts.length; index++) {
             if (listAlerts[index].indexOf(`alert${indexAlert}`) > -1) {
                 listAlerts.splice(index, 1);
@@ -46,4 +46,4 @@ export default class Alert {
         }
         this.drawAlerts();
     }
-}
+// }
